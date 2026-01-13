@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
-from multi_app import MultiApp   # import your class
+from multi_app import MultiApp
 
 import dataset_overview
 import eda
-import aqi_predcition   # fixed spelling
+import aqi_predcition 
 
 # Load the dataframe
 df = pd.read_csv("cleaned_air_quality.csv")
