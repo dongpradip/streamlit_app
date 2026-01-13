@@ -42,68 +42,67 @@ st.set_page_config(
     layout="wide",
 )
 
-# 2. Advanced Styling for Sidebar (No-Logo Design)
+# 2. CSS for Visibility and Positioning
 st.markdown("""
     <style>
-        /* This styles the sidebar top area */
+        /* Forces sidebar text to be dark for readability */
         [data-testid="stSidebar"] {
             background-color: #f0f2f6;
+            color: #1a1a1a !important;
         }
         
-        /* Create a "Logo" box using CSS */
+        /* Ensures labels and markdown are dark */
+        [data-testid="stSidebar"] .stMarkdown p, 
+        [data-testid="stSidebar"] label {
+            color: #1a1a1a !important;
+        }
+
         .sidebar-logo-box {
-            background-color: #1E88E5; /* Professional Blue */
+            background-color: #1E88E5;
             padding: 20px;
             border-radius: 15px;
-            color: white;
+            color: white !important; /* Keep logo text white */
             text-align: center;
             margin-bottom: 25px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
         }
-        
-        .student-id-text {
-            font-size: 0.85rem;
-            color: #555;
+
+        /* Styling for the bottom ID */
+        .bottom-id {
+            position: relative;
             text-align: center;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            color: #555 !important;
+            font-size: 0.9rem;
         }
     </style>
 """, unsafe_allow_html=True)
 
 # --- SIDEBAR CONTENT ---
 
-# A. Styled Header (Acts as your "Logo")
+# A. Branded Header
 st.sidebar.markdown(
     """<div class="sidebar-logo-box">
         <h2 style='margin:0; color:white;'>🍃 AirDash</h2>
-        <p style='margin:0; font-size:12px; opacity:0.8;'>India Air Quality Insights</p>
+        <p style='margin:0; font-size:12px; opacity:0.8; color:white;'>India Air Quality Insights</p>
     </div>""", 
     unsafe_allow_html=True
 )
 
-# B. Student Info (Subtle and clean)
-st.sidebar.markdown(f'<p class="student-id-text">🎓 Student ID: <b>20341085</b></p>', unsafe_allow_html=True)
-
-# C. Quick Data Summary
+# B. Quick Data Summary
 df = pd.read_csv("cleaned_air_quality.csv")
-with st.sidebar.container():
-    st.markdown("🔍 **Data Snapshot**")
-    c1, c2 = st.columns(2)
-    c1.metric("Cities", df['City'].nunique())
-    # Display record count in thousands (K) for a cleaner look
-    c2.metric("Records", f"{len(df)/1000:.1f}K")
-    st.sidebar.markdown("---")
+st.sidebar.subheader("📊 Data Snapshot")
+c1, c2 = st.sidebar.columns(2)
+c1.metric("Cities", df['City'].nunique())
+c2.metric("Records", f"{len(df)/1000:.1f}K")
 
-# --- APP LOGIC ---
-st.sidebar.markdown("### 🧭 Main Navigation")
+st.sidebar.markdown("---")
+
+# C. Navigation
+st.sidebar.subheader("🧭 Main Navigation")
 app = MultiApp()
-
-# Added emojis to labels to make them look like buttons
 app.add_app("📊 Dataset Overview", lambda: dataset_overview.app(df))
 app.add_app("📈 Exploratory Analysis", lambda: eda.app(df))
 app.add_app("🔮 AQI Prediction", lambda: aqi_predcition.app())
 
-# Run the app
 app.run()
