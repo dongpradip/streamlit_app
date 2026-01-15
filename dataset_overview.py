@@ -1,49 +1,11 @@
-# import streamlit as st
-# import pandas as pd
-
-# def app(df):
-#   st.header("Dataset Overview")
-
-#   st.write("Dataset Shape:", df.shape)
-#   st.dataframe(df.head())
-
-#   st.subheader("Data Types")
-#   st.write(df.dtypes)
-
-#   st.subheader("Summary Statistics")
-#   st.write(df.describe())
-
-
-# import streamlit as st
-# import pandas as pd
-
-# def app(df):
-#     st.header("Dataset Overview")
-
-#     st.write("Dataset Shape:", df.shape)
-
-#     # FIX STARTS HERE
-#     df_display = df.copy()
-
-#     for col in df_display.columns:
-#         if df_display[col].dtype == "object":
-#             df_display[col] = df_display[col].astype(str)
-
-#     st.dataframe(df_display.head())
-#     # FIX ENDS HERE
-
-#     st.subheader("Data Types")
-#     st.write(df.dtypes)
-
-#     st.subheader("Summary Statistics")
-#     st.write(df.describe())
-
 import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+# calling function from the main app
 def app(df):
+    # page title
     st.title("📊 Dataset Overview")
 
     # ----------- TOP METRICS -----------
