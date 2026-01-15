@@ -33,11 +33,3 @@ class MultiApp:
             if app['title'] == selected_title:
                 app['function']()
                 break
-
-    # def run(self):
-    #     app = st.sidebar.selectbox(
-    #         'Select your choice from drop down list',
-    #         self.apps,
-    #         format_func=lambda app: app['title'])
-
-    #     app['function']()
