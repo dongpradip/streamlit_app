@@ -23,9 +23,21 @@ class MultiApp:
         })
 
     def run(self):
-        app = st.sidebar.selectbox(
+        titles = [app['title'] for app in self.apps]
+        selected_title = st.sidebar.selectbox(
             'Select your choice from drop down list',
-            self.apps,
-            format_func=lambda app: app['title'])
+            titles,
+            key="navigation_menu"
+        )
+        for app in self.apps:
+            if app['title'] == selected_title:
+                app['function']()
+                break
 
-        app['function']()
+    # def run(self):
+    #     app = st.sidebar.selectbox(
+    #         'Select your choice from drop down list',
+    #         self.apps,
+    #         format_func=lambda app: app['title'])
+
+    #     app['function']()
