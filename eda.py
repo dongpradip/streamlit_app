@@ -74,22 +74,13 @@ def app(df):
     # --------- Heatmap ---------
     with tab4:
         st.subheader("Heatmaps of Selected Pollutants")
-
-        #added few more code
-        df_heatmap = df_filtered.copy()
-        df_heatmap['Date_str'] = df_heatmap['Date'].dt.strftime('%Y-%m-%d']
                                                                 
         for pollutant in selected_pollutants:
-            # pivot = df_filtered.pivot_table(index='City', columns='Date', values=pollutant, aggfunc='mean')
-            pivot = df_heatmap.pivot_table(index='City', columns='Date_str', values=pollutant, aggfunc='mean')
+            pivot = df_filtered.pivot_table(index='City', columns='Date', values=pollutant, aggfunc='mean')
         
             fig, ax = plt.subplots(figsize=(12,5))
             sns.heatmap(pivot, cmap='YlOrRd', linecolor='white', linewidths=0.1)
-            n = 15 # added
-            [l.set_visible(False) for (i, l) in enumerate(ax.xaxis.get_ticklabels()) if i % n != 0]
-        
             ax.set_title(f"{pollutant} Heatmap: City vs Date")
-            plt.xticks(rotation=45) # added
             st.pyplot(fig)
 
     # --------- Correlation Matrix ---------
